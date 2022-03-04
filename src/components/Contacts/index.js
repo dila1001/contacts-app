@@ -16,12 +16,13 @@ const Contacts = () => {
   const [grid, setGrid] = useState(true);
   const [ascending, setAscending] = useState(false);
   const [search, setSearch] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch("https://randomuser.me/api/?results=50")
       .then((res) => res.json())
       .then((data) => setContacts(data.results))
-      .catch((err) => console.log(err));
+      .catch((err) => setError(err.message));
   }, []);
 
   const sortContacts = () => {
@@ -100,7 +101,12 @@ const Contacts = () => {
             gap: grid ? "48px 61px" : "18px",
           }}
         >
-          {displayContacts}
+          {error
+            ? error
+            : contacts.length > 0
+            ? displayContacts
+            : "No contacts found"}
+          {/*           {contacts.length > 0 ? displayContacts : "No contacts found"} */}
         </ContactsDiv>
       </Suspense>
     </div>

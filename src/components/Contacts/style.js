@@ -22,9 +22,11 @@ export const ControlsDiv = styled.div`
   max-width: 752px;
   margin: 0 auto;
   margin-top: 50px;
+  gap: 0px;
 `;
 
 export const DisplayToggle = styled.img`
   width: 20px;
   margin-right: 10px;
+  margin-left: auto;
 `;
