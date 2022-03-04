@@ -2,7 +2,13 @@ import { lazy, Suspense } from "react";
 /* import Grid from "../Grid";
 import List from "../List"; */
 import { useEffect, useState } from "react";
-import { ContactsDiv, ControlsDiv, DisplayToggle } from "./style";
+import {
+  ContactsDiv,
+  ControlsDiv,
+  DisplayToggle,
+  SearchDiv,
+  SearchDivTop,
+} from "./style";
 import SortIcon from "../../assets/sort-icon.svg";
 import ListIcon from "../../assets/list-icon.svg";
 import GridIcon from "../../assets/grid-icon.svg";
@@ -57,7 +63,8 @@ const Contacts = () => {
 
   const displayContacts = contacts
     .filter((item) => {
-      return item.name.first.toLowerCase().includes(search);
+      const fullName = `${item.name.first} ${item.name.last}`;
+      return fullName.toLowerCase().includes(search);
     })
     .map((item) => {
       return grid ? (
@@ -85,9 +92,14 @@ const Contacts = () => {
 
   return (
     <div>
+      <SearchDivTop>
+        <SearchBar value={search} handleChange={handleSearch} />
+      </SearchDivTop>
       <ControlsDiv>
         <img src={SortIcon} width="31px" onClick={sortContacts} />
-        <SearchBar value={search} handleChange={handleSearch} />
+        <SearchDiv>
+          <SearchBar value={search} handleChange={handleSearch} />
+        </SearchDiv>
         <DisplayToggle
           src={grid ? GridIcon : ListIcon}
           width={grid ? "24px" : "20px"}
@@ -106,7 +118,6 @@ const Contacts = () => {
             : contacts.length > 0
             ? displayContacts
             : "No contacts found"}
-          {/*           {contacts.length > 0 ? displayContacts : "No contacts found"} */}
         </ContactsDiv>
       </Suspense>
     </div>

@@ -23,10 +23,25 @@ export const ControlsDiv = styled.div`
   margin: 0 auto;
   margin-top: 50px;
   gap: 0px;
+  @media (max-width: 428px) {
+    margin-top: 30px;
+  }
 `;
 
 export const DisplayToggle = styled.img`
   width: 20px;
   margin-right: 10px;
   margin-left: auto;
+`;
+
+export const SearchDiv = styled.div`
+  @media (max-width: 428px) {
+    display: none;
+  }
+`;
+
+export const SearchDivTop = styled.div`
+  @media (min-width: 428px) {
+    display: none;
+  }
 `;

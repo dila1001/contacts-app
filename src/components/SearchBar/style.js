@@ -19,4 +19,8 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
+  @media (max-width: 428px) {
+    width: 90%;
+    margin-left: 0px;
+  }
 `;

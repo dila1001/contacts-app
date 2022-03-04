@@ -53,4 +53,8 @@ export const ContactDiv = styled.div`
   justify-content: center;
   column-gap: 10px;
   margin-right: 33px;
+  @media (max-width: 428px) {
+    align-self: flex-end;
+    margin-bottom: 10px;
+  }
 `;
