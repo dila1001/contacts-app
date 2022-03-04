@@ -11,6 +11,7 @@ export const ContactsDiv = styled.div`
   max-width: 752px;
   margin: 0 auto;
   margin-top: 18px;
+  margin-bottom: 48px;
 `;
 
 export const ControlsDiv = styled.div`
