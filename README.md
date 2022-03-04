@@ -10,6 +10,7 @@ A contacts app that fetches contacts data from API and displays in list/grid vie
 
 - Toggles between list and grid view
 - Sorts by name (ascending and descending)
+- Search bar to search by name
 - Responsive design
 - Lazy-loading
 
