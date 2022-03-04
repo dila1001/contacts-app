@@ -1,4 +1,4 @@
-import { Card, Name, Location, Avatar, ContactDiv } from "./style";
+import { Card, Name, Location, Avatar, ContactDiv, Mail, Phone } from "./style";
 import MailIcon from "../../assets/mail.svg";
 import PhoneIcon from "../../assets/phone.svg";
 import GreenBackground from "../../assets/card-bg.svg";
@@ -19,10 +19,10 @@ const Grid = (props) => {
       <Location>{props.location}</Location>
       <ContactDiv>
         <a href={`mailto:${props.email}`}>
-          <img src={MailIcon} width="22px" />
+          <Mail src={MailIcon} />
         </a>
         <a href={`tel:${props.phone}`}>
-          <img src={PhoneIcon} width="19px" />
+          <Phone src={PhoneIcon} />
         </a>
       </ContactDiv>
     </Card>

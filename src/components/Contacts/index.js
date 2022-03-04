@@ -115,9 +115,9 @@ const Contacts = () => {
         >
           {error
             ? error
-            : contacts.length > 0
+            : displayContacts.length > 0
             ? displayContacts
-            : "No contacts found"}
+            : "No contact found"}
         </ContactsDiv>
       </Suspense>
     </div>

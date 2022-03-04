@@ -12,6 +12,9 @@ export const ContactsDiv = styled.div`
   margin: 0 auto;
   margin-top: 18px;
   margin-bottom: 48px;
+  @media (max-width: 428px) {
+    gap: 31px !important;
+  }
 `;
 
 export const ControlsDiv = styled.div`
@@ -40,6 +43,7 @@ export const SearchDiv = styled.div`
   }
 `;
 
+/* For small screens */
 export const SearchDivTop = styled.div`
   @media (min-width: 428px) {
     display: none;
