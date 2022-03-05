@@ -33,25 +33,35 @@ const Contacts = () => {
 
   const sortContacts = () => {
     const contactsArray = [...contacts];
-    const sortedContactsArray = ascending
-      ? contactsArray.sort(function (a, b) {
-          if (a.name.first < b.name.first) {
-            return 1;
-          }
-          if (a.name.first > b.name.first) {
-            return -1;
-          }
-          return 0;
-        })
-      : contactsArray.sort(function (a, b) {
-          if (a.name.first < b.name.first) {
-            return -1;
-          }
-          if (a.name.first > b.name.first) {
-            return 1;
-          }
-          return 0;
-        });
+    const sortedContactsArray = contactsArray.sort(function (a, b) {
+      if (a.name.first < b.name.first) {
+        return ascending ? 1 : -1;
+      }
+      if (a.name.first > b.name.first) {
+        return ascending ? -1 : 1;
+      }
+      return 0;
+    });
+
+    // const sortedContactsArray = ascending
+    //   ? contactsArray.sort(function (a, b) {
+    //       if (a.name.first < b.name.first) {
+    //         return 1;
+    //       }
+    //       if (a.name.first > b.name.first) {
+    //         return -1;
+    //       }
+    //       return 0;
+    //     })
+    //   : contactsArray.sort(function (a, b) {
+    //       if (a.name.first < b.name.first) {
+    //         return -1;
+    //       }
+    //       if (a.name.first > b.name.first) {
+    //         return 1;
+    //       }
+    //       return 0;
+    //     });
 
     setContacts(sortedContactsArray);
     setAscending((prevVal) => !prevVal);
@@ -67,26 +77,20 @@ const Contacts = () => {
       return fullName.toLowerCase().includes(search);
     })
     .map((item) => {
+      const contactProps = {
+        age: item.dob.age,
+        key: item.dob.date,
+        firstname: item.name.first,
+        lastname: item.name.last,
+        location: item.location.city,
+        image: item.picture.large,
+        email: item.email,
+        phone: item.phone,
+      };
       return grid ? (
-        <Grid
-          key={item.dob.date}
-          firstname={item.name.first}
-          lastname={item.name.last}
-          location={item.location.city}
-          image={item.picture.large}
-          email={item.email}
-          phone={item.phone}
-        />
+        <Grid contact={contactProps} />
       ) : (
-        <List
-          key={item.dob.date}
-          firstname={item.name.first}
-          lastname={item.name.last}
-          location={item.location.city}
-          image={item.picture.large}
-          email={item.email}
-          phone={item.phone}
-        />
+        <List contact={contactProps} />
       );
     });
 

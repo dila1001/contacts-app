@@ -9,21 +9,21 @@ function List(props) {
   const backgrounds = [GreenBackground, PinkBackground, YellowBackground];
   const cardBackground = {
     backgroundImage: `url(${
-      backgrounds[Math.floor(Math.random() * backgrounds.length)]
+      backgrounds[props.contact.age % backgrounds.length]
     })`,
   };
   return (
     <ListItem style={cardBackground}>
-      <Avatar src={props.image} />
+      <Avatar src={props.contact.image} />
       <NameDiv>
-        <Name>{`${props.firstname} ${props.lastname}`}</Name>
-        <Location>{props.location}</Location>
+        <Name>{`${props.contact.firstname} ${props.contact.lastname}`}</Name>
+        <Location>{props.contact.location}</Location>
       </NameDiv>
       <ContactDiv>
-        <a href={`mailto:${props.email}`}>
+        <a href={`mailto:${props.contact.email}`}>
           <img src={MailIcon} width="22px" />
         </a>
-        <a href={`tel:${props.phone}`}>
+        <a href={`tel:${props.contact.phone}`}>
           <img src={PhoneIcon} width="19px" />
         </a>
       </ContactDiv>

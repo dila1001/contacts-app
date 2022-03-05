@@ -9,19 +9,19 @@ const Grid = (props) => {
   const backgrounds = [GreenBackground, PinkBackground, YellowBackground];
   const cardBackground = {
     backgroundImage: `url(${
-      backgrounds[Math.floor(Math.random() * backgrounds.length)]
+      backgrounds[props.contact.age % backgrounds.length]
     })`,
   };
   return (
     <Card style={cardBackground}>
-      <Name>{`${props.firstname} ${props.lastname}`}</Name>
-      <Avatar src={props.image} />
-      <Location>{props.location}</Location>
+      <Name>{`${props.contact.firstname} ${props.contact.lastname}`}</Name>
+      <Avatar src={props.contact.image} />
+      <Location>{props.contact.location}</Location>
       <ContactDiv>
-        <a href={`mailto:${props.email}`}>
+        <a href={`mailto:${props.contact.email}`}>
           <Mail src={MailIcon} />
         </a>
-        <a href={`tel:${props.phone}`}>
+        <a href={`tel:${props.contact.phone}`}>
           <Phone src={PhoneIcon} />
         </a>
       </ContactDiv>

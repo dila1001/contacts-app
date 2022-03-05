@@ -2,11 +2,8 @@ import styled from "styled-components";
 
 export const ContactsDiv = styled.div`
   display: flex;
-  /* flex-direction: row; */
   flex-wrap: wrap;
-  /* justify-content: space-between; */
   justify-content: center;
-  /* gap: 48px 61px; */
   width: 100%;
   max-width: 752px;
   margin: 0 auto;
@@ -42,8 +39,6 @@ export const SearchDiv = styled.div`
     display: none;
   }
 `;
-
-/* For small screens */
 export const SearchDivTop = styled.div`
   @media (min-width: 428px) {
     display: none;
