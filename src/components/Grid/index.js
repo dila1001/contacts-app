@@ -19,10 +19,10 @@ const Grid = (props) => {
       <Location>{props.contact.location}</Location>
       <ContactDiv>
         <a href={`mailto:${props.contact.email}`}>
-          <Mail src={MailIcon} />
+          <Mail src={MailIcon} alt="email" />
         </a>
         <a href={`tel:${props.contact.phone}`}>
-          <Phone src={PhoneIcon} />
+          <Phone src={PhoneIcon} alt="phonenumber" />
         </a>
       </ContactDiv>
     </Card>

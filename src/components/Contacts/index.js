@@ -1,6 +1,7 @@
 import Grid from "../Grid";
 import List from "../List";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { InView } from "react-intersection-observer";
+import { useEffect, useState, Fragment } from "react";
 import {
   ContactsDiv,
   ControlsDiv,
@@ -20,7 +21,7 @@ const Contacts = () => {
   const [isGrid, setIsGrid] = useState(true);
   const [isAscending, setIsAscending] = useState(false);
   const [search, setSearch] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const maxPageNum = 4;
 
@@ -38,7 +39,7 @@ const Contacts = () => {
             return [...new Set([...prev, ...data.results])];
           });
         })
-        .catch((err) => setError(err.message))
+        .catch((err) => setErrorMessage(err.message))
         .finally(() => setIsLoading(false));
     });
   }, [pageNum]);
@@ -58,33 +59,14 @@ const Contacts = () => {
     setIsAscending((prevVal) => !prevVal);
   };
 
-  const loader = useRef(null);
-  const handleObserver = useCallback(
-    (entries) => {
-      if (isLoading || search.length > 0) return;
-      const target = entries[0];
-      if (target.isIntersecting) {
-        setPageNum((prev) => {
-          return Math.min(maxPageNum, prev + 1);
-        });
-      }
-    },
-    [isLoading, search]
-  );
+  function increasePageNumber(increase) {
+    // If we are not intersecting then skip
+    if (!increase || isLoading || search.length > 0) return;
 
-  const observer = useRef();
-  useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: "20px",
-      threshold: 0,
-    };
-
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(handleObserver, option);
-
-    if (loader.current) observer.current.observe(loader.current);
-  }, [handleObserver]);
+    setPageNum((prev) => {
+      return Math.min(maxPageNum, prev + 1);
+    });
+  }
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -95,7 +77,7 @@ const Contacts = () => {
       const fullName = `${item.name.first} ${item.name.last}`;
       return fullName.toLowerCase().includes(search);
     })
-    .map((item, i) => {
+    .map((item) => {
       const contactProps = {
         age: item.dob.age,
         firstname: item.name.first,
@@ -113,33 +95,27 @@ const Contacts = () => {
     });
 
   return (
-    <div>
+    <>
       <SearchDivTop>
-        <SearchBar
-          value={search}
-          handleChange={handleSearch}
-          ariaLabel="Search contact"
-        />
+        <SearchBar value={search} handleChange={handleSearch} />
       </SearchDivTop>
       <ControlsDiv>
         <img
           src={SortIcon}
           width="31px"
           onClick={sortContacts}
-          ariaLabel={isAscending ? "Sort descending" : "Sort ascending"}
+          aria-label={isAscending ? "Sort descending" : "Sort ascending"}
+          role="button"
         />
         <SearchDiv>
-          <SearchBar
-            value={search}
-            handleChange={handleSearch}
-            ariaLabel="Search contact"
-          />
+          <SearchBar value={search} handleChange={handleSearch} />
         </SearchDiv>
         <DisplayToggle
           src={isGrid ? GridIcon : ListIcon}
           width={isGrid ? "24px" : "20px"}
           onClick={() => setIsGrid((prevVal) => !prevVal)}
-          ariaLable={isGrid ? "Display in list view" : "Display in grid view"}
+          aria-label={isGrid ? "Display in list view" : "Display in grid view"}
+          role="button"
         />
       </ControlsDiv>
       <ContactsDiv
@@ -148,15 +124,19 @@ const Contacts = () => {
           gap: isGrid ? "48px 61px" : "18px",
         }}
       >
-        {error
-          ? error
+        {errorMessage
+          ? errorMessage
           : displayContacts.length > 0
           ? displayContacts
           : "No contact found"}
       </ContactsDiv>
       {isLoading && <ContactsDiv>Loading...</ContactsDiv>}
-      <div ref={loader} />
-    </div>
+      <InView
+        as="div"
+        rootMargin="20px"
+        onChange={(inView, entry) => increasePageNumber(inView)}
+      ></InView>
+    </>
   );
 };
 

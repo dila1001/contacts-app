@@ -8,6 +8,7 @@ function SearchBar(props) {
         name="search"
         value={props.value}
         onChange={props.handleChange}
+        aria-label="Search contact"
       />
     </div>
   );
