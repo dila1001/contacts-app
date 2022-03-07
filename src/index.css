@@ -11,6 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #ebe9e4;
   color: #000000;
+  font-size: 16px;
 }
 
 code {
@@ -21,7 +22,7 @@ code {
 h1 {
   font-family: "Work Sans", sans-serif;
   font-weight: 400;
-  font-size: 48px;
+  font-size: 3rem;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
@@ -33,7 +34,7 @@ h1 {
 
 @media only screen and (max-width: 428px) {
   h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
     margin-top: 72px;
     margin-bottom: 30px;
   }

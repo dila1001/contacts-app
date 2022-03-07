@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContactsDiv = styled.div`
+export const ContactsDiv = styled.main`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -14,7 +14,7 @@ export const ContactsDiv = styled.div`
   }
 `;
 
-export const ControlsDiv = styled.div`
+export const ControlsDiv = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -34,11 +34,14 @@ export const DisplayToggle = styled.img`
   margin-left: auto;
 `;
 
-export const SearchDiv = styled.div`
+export const SearchDiv = styled.section`
   @media (max-width: 428px) {
     display: none;
   }
 `;
+
+/* For small screens  */
+
 export const SearchDivTop = styled.div`
   @media (min-width: 428px) {
     display: none;

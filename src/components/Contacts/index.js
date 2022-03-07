@@ -1,7 +1,6 @@
-import { lazy, Suspense } from "react";
-/* import Grid from "../Grid";
-import List from "../List"; */
-import { useEffect, useState } from "react";
+import Grid from "../Grid";
+import List from "../List";
+import { useEffect, useState, useRef, useCallback } from "react";
 import {
   ContactsDiv,
   ControlsDiv,
@@ -14,58 +13,78 @@ import ListIcon from "../../assets/list-icon.svg";
 import GridIcon from "../../assets/grid-icon.svg";
 import SearchBar from "../SearchBar";
 
-const Grid = lazy(() => import("../Grid"));
-const List = lazy(() => import("../List"));
-
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
-  const [grid, setGrid] = useState(true);
-  const [ascending, setAscending] = useState(false);
+  const [pageNum, setPageNum] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGrid, setIsGrid] = useState(true);
+  const [isAscending, setIsAscending] = useState(false);
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
 
+  const maxPageNum = 4;
+
   useEffect(() => {
-    fetch("https://randomuser.me/api/?results=50")
-      .then((res) => res.json())
-      .then((data) => setContacts(data.results))
-      .catch((err) => setError(err.message));
-  }, []);
+    setIsLoading(true);
+    const delay = pageNum === 1 ? 0 : 1000;
+
+    new Promise((r) => setTimeout(r, delay)).then(() => {
+      fetch(
+        `https://randomuser.me/api/?results=9&seed=devoteam&page=${pageNum}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setContacts((prev) => {
+            return [...new Set([...prev, ...data.results])];
+          });
+        })
+        .catch((err) => setError(err.message))
+        .finally(() => setIsLoading(false));
+    });
+  }, [pageNum]);
 
   const sortContacts = () => {
     const contactsArray = [...contacts];
     const sortedContactsArray = contactsArray.sort(function (a, b) {
       if (a.name.first < b.name.first) {
-        return ascending ? 1 : -1;
+        return isAscending ? 1 : -1;
       }
       if (a.name.first > b.name.first) {
-        return ascending ? -1 : 1;
+        return isAscending ? -1 : 1;
       }
       return 0;
     });
-
-    // const sortedContactsArray = ascending
-    //   ? contactsArray.sort(function (a, b) {
-    //       if (a.name.first < b.name.first) {
-    //         return 1;
-    //       }
-    //       if (a.name.first > b.name.first) {
-    //         return -1;
-    //       }
-    //       return 0;
-    //     })
-    //   : contactsArray.sort(function (a, b) {
-    //       if (a.name.first < b.name.first) {
-    //         return -1;
-    //       }
-    //       if (a.name.first > b.name.first) {
-    //         return 1;
-    //       }
-    //       return 0;
-    //     });
-
     setContacts(sortedContactsArray);
-    setAscending((prevVal) => !prevVal);
+    setIsAscending((prevVal) => !prevVal);
   };
+
+  const loader = useRef(null);
+  const handleObserver = useCallback(
+    (entries) => {
+      if (isLoading || search.length > 0) return;
+      const target = entries[0];
+      if (target.isIntersecting) {
+        setPageNum((prev) => {
+          return Math.min(maxPageNum, prev + 1);
+        });
+      }
+    },
+    [isLoading, search]
+  );
+
+  const observer = useRef();
+  useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 0,
+    };
+
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(handleObserver, option);
+
+    if (loader.current) observer.current.observe(loader.current);
+  }, [handleObserver]);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -76,10 +95,9 @@ const Contacts = () => {
       const fullName = `${item.name.first} ${item.name.last}`;
       return fullName.toLowerCase().includes(search);
     })
-    .map((item) => {
+    .map((item, i) => {
       const contactProps = {
         age: item.dob.age,
-        key: item.dob.date,
         firstname: item.name.first,
         lastname: item.name.last,
         location: item.location.city,
@@ -87,43 +105,57 @@ const Contacts = () => {
         email: item.email,
         phone: item.phone,
       };
-      return grid ? (
-        <Grid contact={contactProps} />
+      return isGrid ? (
+        <Grid key={item.dob.date} contact={contactProps} />
       ) : (
-        <List contact={contactProps} />
+        <List key={item.dob.date} contact={contactProps} />
       );
     });
 
   return (
     <div>
       <SearchDivTop>
-        <SearchBar value={search} handleChange={handleSearch} />
+        <SearchBar
+          value={search}
+          handleChange={handleSearch}
+          ariaLabel="Search contact"
+        />
       </SearchDivTop>
       <ControlsDiv>
-        <img src={SortIcon} width="31px" onClick={sortContacts} />
+        <img
+          src={SortIcon}
+          width="31px"
+          onClick={sortContacts}
+          ariaLabel={isAscending ? "Sort descending" : "Sort ascending"}
+        />
         <SearchDiv>
-          <SearchBar value={search} handleChange={handleSearch} />
+          <SearchBar
+            value={search}
+            handleChange={handleSearch}
+            ariaLabel="Search contact"
+          />
         </SearchDiv>
         <DisplayToggle
-          src={grid ? GridIcon : ListIcon}
-          width={grid ? "24px" : "20px"}
-          onClick={() => setGrid((prevVal) => !prevVal)}
+          src={isGrid ? GridIcon : ListIcon}
+          width={isGrid ? "24px" : "20px"}
+          onClick={() => setIsGrid((prevVal) => !prevVal)}
+          ariaLable={isGrid ? "Display in list view" : "Display in grid view"}
         />
       </ControlsDiv>
-      <Suspense fallback={<ContactsDiv>Loading...</ContactsDiv>}>
-        <ContactsDiv
-          style={{
-            flexDirection: grid ? "row" : "column",
-            gap: grid ? "48px 61px" : "18px",
-          }}
-        >
-          {error
-            ? error
-            : displayContacts.length > 0
-            ? displayContacts
-            : "No contact found"}
-        </ContactsDiv>
-      </Suspense>
+      <ContactsDiv
+        style={{
+          flexDirection: isGrid ? "row" : "column",
+          gap: isGrid ? "48px 61px" : "18px",
+        }}
+      >
+        {error
+          ? error
+          : displayContacts.length > 0
+          ? displayContacts
+          : "No contact found"}
+      </ContactsDiv>
+      {isLoading && <ContactsDiv>Loading...</ContactsDiv>}
+      <div ref={loader} />
     </div>
   );
 };

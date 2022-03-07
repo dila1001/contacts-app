@@ -1,4 +1,12 @@
-import { ListItem, Avatar, Name, Location, NameDiv, ContactDiv } from "./style";
+import {
+  ListItem,
+  Avatar,
+  Name,
+  Location,
+  NameDiv,
+  ContactDiv,
+  GroupDiv,
+} from "./style";
 import MailIcon from "../../assets/mail.svg";
 import PhoneIcon from "../../assets/phone.svg";
 import GreenBackground from "../../assets/list-bg.svg";
@@ -15,18 +23,20 @@ function List(props) {
   return (
     <ListItem style={cardBackground}>
       <Avatar src={props.contact.image} />
-      <NameDiv>
-        <Name>{`${props.contact.firstname} ${props.contact.lastname}`}</Name>
-        <Location>{props.contact.location}</Location>
-      </NameDiv>
-      <ContactDiv>
-        <a href={`mailto:${props.contact.email}`}>
-          <img src={MailIcon} width="22px" />
-        </a>
-        <a href={`tel:${props.contact.phone}`}>
-          <img src={PhoneIcon} width="19px" />
-        </a>
-      </ContactDiv>
+      <GroupDiv>
+        <NameDiv>
+          <Name>{`${props.contact.firstname} ${props.contact.lastname}`}</Name>
+          <Location>{props.contact.location}</Location>
+        </NameDiv>
+        <ContactDiv>
+          <a href={`mailto:${props.contact.email}`}>
+            <img src={MailIcon} width="22px" />
+          </a>
+          <a href={`tel:${props.contact.phone}`}>
+            <img src={PhoneIcon} width="19px" />
+          </a>
+        </ContactDiv>
+      </GroupDiv>
     </ListItem>
   );
 }

@@ -23,19 +23,19 @@ export const Card = styled.div`
 export const Name = styled.h2`
   font-family: "Karla";
   font-weight: 700;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #292929;
   margin-top: 65px;
   @media (max-width: 428px) {
     margin-top: 33px;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 `;
 
 export const Location = styled.h3`
   font-family: "Lato";
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #292929;
   margin-top: 31px;
   @media (max-width: 428px) {

@@ -14,7 +14,7 @@ export const Input = styled.input`
   box-shadow: none;
   font-family: "Karla";
   font-weight: 700;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #292929;
   &:focus {
     outline: none;
