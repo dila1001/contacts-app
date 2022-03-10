@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { mockAllIsIntersecting } from "react-intersection-observer/test-utils";
 import "@testing-library/jest-dom";
+import { mockAllIsIntersecting } from "react-intersection-observer/test-utils";
 import Contacts from "../Contacts";
 
 import { rest } from "msw";

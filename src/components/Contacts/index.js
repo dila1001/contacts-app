@@ -1,7 +1,7 @@
 import Grid from "../Grid";
 import List from "../List";
 import { InView } from "react-intersection-observer";
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 import {
   ContactsDiv,
   ControlsDiv,
@@ -95,7 +95,7 @@ const Contacts = () => {
     });
 
   return (
-    <>
+    <main>
       <SearchDivTop>
         <SearchBar value={search} handleChange={handleSearch} />
       </SearchDivTop>
@@ -136,7 +136,7 @@ const Contacts = () => {
         rootMargin="20px"
         onChange={(inView, entry) => increasePageNumber(inView)}
       ></InView>
-    </>
+    </main>
   );
 };
 
