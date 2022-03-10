@@ -95,7 +95,7 @@ const Contacts = () => {
     });
 
   return (
-    <main>
+    <>
       <SearchDivTop>
         <SearchBar value={search} handleChange={handleSearch} />
       </SearchDivTop>
@@ -136,7 +136,7 @@ const Contacts = () => {
         rootMargin="20px"
         onChange={(inView, entry) => increasePageNumber(inView)}
       ></InView>
-    </main>
+    </>
   );
 };
 
