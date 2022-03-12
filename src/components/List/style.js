@@ -8,11 +8,11 @@ export const ListItem = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   justify-content: flex-start;
   align-items: center;
   background-position: left;
   background-repeat: no-repeat;
+  background-image: ${(props) => props.bg};
 `;
 
 export const NameDiv = styled.div`

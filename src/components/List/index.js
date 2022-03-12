@@ -15,13 +15,12 @@ import YellowBackground from "../../assets/list-bg3.svg";
 
 function List(props) {
   const backgrounds = [GreenBackground, PinkBackground, YellowBackground];
-  const cardBackground = {
-    backgroundImage: `url(${
-      backgrounds[props.contact.age % backgrounds.length]
-    })`,
-  };
+  const cardBackground = `url(${
+    backgrounds[props.contact.age % backgrounds.length]
+  })`;
+
   return (
-    <ListItem style={cardBackground}>
+    <ListItem bg={cardBackground}>
       <Avatar src={props.contact.image} />
       <GroupDiv>
         <NameDiv>

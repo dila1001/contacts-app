@@ -9,6 +9,8 @@ export const ContactsDiv = styled.div`
   margin: 0 auto;
   margin-top: 18px;
   margin-bottom: 48px;
+  flex-direction: ${(props) => (props.variant ? "row" : "column")};
+  gap: ${(props) => (props.variant ? "48px 61px" : "18px")};
   @media (max-width: 428px) {
     gap: 31px !important;
   }
@@ -29,7 +31,7 @@ export const ControlsDiv = styled.div`
 `;
 
 export const DisplayToggle = styled.img`
-  width: 20px;
+  width: ${(props) => (props.variant ? "24px" : "20px")};
   margin-right: 10px;
   margin-left: auto;
 `;

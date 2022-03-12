@@ -7,13 +7,12 @@ import YellowBackground from "../../assets/card-bg3.svg";
 
 const Grid = (props) => {
   const backgrounds = [GreenBackground, PinkBackground, YellowBackground];
-  const cardBackground = {
-    backgroundImage: `url(${
-      backgrounds[props.contact.age % backgrounds.length]
-    })`,
-  };
+  const cardBackground = `url(${
+    backgrounds[props.contact.age % backgrounds.length]
+  })`;
+
   return (
-    <Card style={cardBackground}>
+    <Card bg={cardBackground}>
       <Name>{`${props.contact.firstname} ${props.contact.lastname}`}</Name>
       <Avatar src={props.contact.image} />
       <Location>{props.contact.location}</Location>

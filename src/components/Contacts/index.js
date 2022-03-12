@@ -112,18 +112,13 @@ const Contacts = () => {
         </SearchDiv>
         <DisplayToggle
           src={isGrid ? GridIcon : ListIcon}
-          width={isGrid ? "24px" : "20px"}
+          variant={isGrid}
           onClick={() => setIsGrid((prevVal) => !prevVal)}
           aria-label={isGrid ? "Display in list view" : "Display in grid view"}
           role="button"
         />
       </ControlsDiv>
-      <ContactsDiv
-        style={{
-          flexDirection: isGrid ? "row" : "column",
-          gap: isGrid ? "48px 61px" : "18px",
-        }}
-      >
+      <ContactsDiv variant={isGrid}>
         {errorMessage
           ? errorMessage
           : displayContacts.length > 0
